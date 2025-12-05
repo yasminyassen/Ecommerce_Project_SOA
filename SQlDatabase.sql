@@ -38,6 +38,24 @@ CREATE TABLE notification_log (
     sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_id INT NOT NULL,
+    total_amount DECIMAL(10,2) NOT NULL,
+    order_status VARCHAR(50) DEFAULT 'Pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE order_items (
+    order_item_id INT PRIMARY KEY AUTO_INCREMENT,
+    order_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    unit_price DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES orders(order_id)
+);
+
+
 INSERT INTO inventory (product_name, quantity_available, unit_price) VALUES
 ('Laptop', 50, 999.99),
 ('Mouse', 200, 29.99),
@@ -54,4 +72,9 @@ INSERT INTO pricing_rules (product_id, min_quantity, discount_percentage) VALUES
 (1, 5, 10.00),
 (2, 10, 15.00),
 (3, 10, 12.00);
+
+INSERT INTO tax_rates (region, tax_rate) VALUES
+('Cairo', 14.00),
+('Giza', 14.00),
+('Default', 10.00);
 

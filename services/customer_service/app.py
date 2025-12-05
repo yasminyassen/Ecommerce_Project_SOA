@@ -1,9 +1,4 @@
-from flask import Flask
-app = Flask(__name__)
-
-@app.route("/")
-def home():
-    return "Customer Service is running!"
+from routes import app
 
 if __name__ == "__main__":
-    app.run(port=5004)
+    app.run(port=5004, debug=True)
